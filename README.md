@@ -46,15 +46,25 @@ usage: ./6dpes <PDB filename> [<b1_x> <b1_y> <b1_z> <b2_x> <b2_y> <b2_z> <b3_x> 
 	[dx,...,dphi,dr] : the step size for c.o.m. coordinates, r, and for the spherical polar angles (theta angle of rotation around the Y axis, phi is the angle around the Z axis)  
 	[efield_x,...efield_z] : apply an electric field to the system, in units of e/A^2  
 	columnar output is [x,y,z,theta,phi,r,E,BOND,LJ,ES,POL)]  
+
+
 MOF5 example:  
 	$ ./6dpes MOF5+BSS.pdb 25.669 0.0 0.0 0.0 25.669 0.0 0.0 0.0 25.669 -10.0 -10.0 -10.0 0.2 10.0 10.0 10.0 2.0 0.001 0.001 0.001 0.1 0.1 0.01 0.0 0.0 0.0  
 would map the PES at each point within a subcube of the unit cell spanned by [-10,-10,-10]x[10,10,10] for all angles theta=0-pi,phi=0-2*pi and bond distance 0.5 to 1.0 A in 0.1 A increments  
+
+
 for a vibrational surface only:  
 	$ ./6dpes MOF5+BSS.pdb 25.669 0.0 0.0 0.0 25.669 0.0 0.0 0.0 25.669 -10.0 -10.0 -10.0 0.2 -10.0 -10.0 -10.0 4.0 1000.0 1000.0 1000.0 1000.0 1000.0 0.001 0.0 0.0 0.0 | awk '{print $6 " " $7}'  
 for the vibrational surface of an H2 in a 0.5 e/A^2 field transverse to it's axis:  
+
+
 	$ ./6dpes BSSP.pdb 1000.0 0.0 0.0 0.0 1000.0 0.0 0.0 0.0 1000.0 -10.0 -10.0 -10.0 0.2 -10.0 -10.0 -10.0 4.0 1000.0 1000.0 1000.0 1000.0 1000.0 0.001 0.0 0.0 0.5 | awk '{print $6 " " $7}'  
 or to evaluate the vib frequency (cm^-1) by second derivative (central difference) at the minimum:  
+
+
 	$ ./6dpes BSSP.pdb 1000.0 0.0 0.0 0.0 1000.0 0.0 0.0 0.0 1000.0 -10.0 -10.0 -10.0 0.7419 -10.0 -10.0 -10.0 0.7421 1000.0 1000.0 1000.0 1000.0 1000.0 0.0001 0.00003 0.0 0.0 | awk '{print $7}' | column | awk '{}{printf("%.16f\n",sqrt(($3+$1-2.0*$2)/1.0e-8)*42.796);}{}'  
+
+
 or to evaluate the vib frequency (cm^-1) by second derivative at global min in MOF5:  
 	$ ./6dpes MOF5+H2.globalmin.pdb 25.669 0.0 0.0 0.0 25.669 0.0 0.0 0.0 25.669 -4.176 -4.216 8.437 0.7419 -4.176 -4.216 8.437 0.7421 1000.0 1000.0 1000.0 1000.0 1000.0 0.0001 0.0 0.0 0.0 | awk '{print $7}' | column | awk '{}{printf("%.16f\n",sqrt(($3+$1-2.0*$2)/1.0e-8)*42.796);}{}'  
 

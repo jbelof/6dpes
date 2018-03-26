@@ -55,6 +55,8 @@ would map the PES at each point within a subcube of the unit cell spanned by [-1
 
 for a vibrational surface only:  
 	$ ./6dpes MOF5+BSS.pdb 25.669 0.0 0.0 0.0 25.669 0.0 0.0 0.0 25.669 -10.0 -10.0 -10.0 0.2 -10.0 -10.0 -10.0 4.0 1000.0 1000.0 1000.0 1000.0 1000.0 0.001 0.0 0.0 0.0 | awk '{print $6 " " $7}'  
+
+
 for the vibrational surface of an H2 in a 0.5 e/A^2 field transverse to it's axis:  
 
 
